@@ -1,4 +1,4 @@
-package bi.know.kettle.neo4j.output;
+package org.neo4j.kettle.steps.output;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,11 +25,11 @@ import org.pentaho.di.trans.step.StepMetaInterface;
 
 
 
-public class Neo4JOutput  extends BaseStep implements StepInterface {
-	private static Class<?> PKG = Neo4JOutput.class; // for i18n purposes, needed by Translator2!!
+public class Neo4jOutput  extends BaseStep implements StepInterface {
+	private static Class<?> PKG = Neo4jOutput.class; // for i18n purposes, needed by Translator2!!
 
-	private Neo4JOutputMeta meta; 
-	private Neo4JOutputData data;
+	private Neo4jOutputMeta meta; 
+	private Neo4jOutputData data;
 	private int nbRows;
 	private String[] fieldNames;
 	private Object[] r; 
@@ -37,7 +37,7 @@ public class Neo4JOutput  extends BaseStep implements StepInterface {
 	private Driver driver; 
 	private Session session;
 	
-    public Neo4JOutput(StepMeta s, StepDataInterface stepDataInterface, int c, TransMeta t, Trans dis) {
+    public Neo4jOutput(StepMeta s, StepDataInterface stepDataInterface, int c, TransMeta t, Trans dis) {
 		super(s,stepDataInterface,c,t,dis);
 	}
     
@@ -50,8 +50,8 @@ public class Neo4JOutput  extends BaseStep implements StepInterface {
 	 */
     public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws KettleException{
     	
-    	meta = (Neo4JOutputMeta)smi;
-    	data =  (Neo4JOutputData)sdi;
+    	meta = (Neo4jOutputMeta)smi;
+    	data =  (Neo4jOutputData)sdi;
     	
     	r = getRow();
     	
@@ -81,12 +81,12 @@ public class Neo4JOutput  extends BaseStep implements StepInterface {
 	   	     	setLinesWritten(nbRows);
 	   	     	setLinesOutput(nbRows);
         	}catch(Exception e){
-        		logError(BaseMessages.getString(PKG, "Neo4JOutput.addNodeError") + e.getMessage());
+        		logError(BaseMessages.getString(PKG, "Neo4jOutput.addNodeError") + e.getMessage());
         	}
         	
         	try{            	
         	}catch(Exception e){
-        		logError(BaseMessages.getString(PKG, "Neo4JOutput.addRelationshipError") + e.getMessage());
+        		logError(BaseMessages.getString(PKG, "Neo4jOutput.addRelationshipError") + e.getMessage());
         	}
         	return true; 
         }
@@ -94,8 +94,8 @@ public class Neo4JOutput  extends BaseStep implements StepInterface {
     
     
 	public boolean init(StepMetaInterface smi, StepDataInterface sdi){
-	    meta = (Neo4JOutputMeta)smi;
-	    data = (Neo4JOutputData)sdi;
+	    meta = (Neo4jOutputMeta)smi;
+	    data = (Neo4jOutputData)sdi;
 	    
 	    String url = meta.getProtocol() + "://" + environmentSubstitute(meta.getHost()) + ":" + environmentSubstitute(meta.getPort());  
 	    driver = GraphDatabase.driver(url, AuthTokens.basic(environmentSubstitute(meta.getUsername()), environmentSubstitute(meta.getPassword())));

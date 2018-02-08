@@ -1,4 +1,4 @@
-package bi.know.kettle.neo4j.output;
+package org.neo4j.kettle.steps.output;
 
 
 import org.eclipse.swt.SWT;
@@ -50,11 +50,11 @@ import org.pentaho.di.ui.trans.step.BaseStepDialog;
 
 
 
-public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInterface{
-	private static Class<?> PKG = Neo4JOutputDialog.class; // for i18n purposes, needed by Translator2!!
+public class Neo4jOutputDialog extends BaseStepDialog implements StepDialogInterface{
+	private static Class<?> PKG = Neo4jOutputDialog.class; // for i18n purposes, needed by Translator2!!
 
 	
-	private Neo4JOutputMeta input; 
+	private Neo4jOutputMeta input; 
 	
 	private Label wlProtocol, wlHost; 
 	private TextVar wProtocol, wHost, wPort, wUsername, wPassword;
@@ -67,10 +67,10 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 	private Button wGetFromLabel, wGetFromProps, wGetToLabel, wGetToProps, wRelProps;
 
 	
-	public Neo4JOutputDialog(Shell parent, Object in, TransMeta transMeta, String sname)
+	public Neo4jOutputDialog(Shell parent, Object in, TransMeta transMeta, String sname)
 	{
 		super(parent, (BaseStepMeta)in, transMeta, sname);
-		input=(Neo4JOutputMeta)in;
+		input=(Neo4jOutputMeta)in;
 	}
 
 
@@ -104,14 +104,14 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		formLayout.marginHeight = Const.FORM_MARGIN;
 
 		shell.setLayout(formLayout);
-		shell.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.Shell.Title")); //$NON-NLS-1$
+		shell.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.Shell.Title")); //$NON-NLS-1$
 		
 		int middle = props.getMiddlePct();
 		int margin = Const.MARGIN;
 
 		// Stepname line
 		wlStepname=new Label(shell, SWT.RIGHT);
-		wlStepname.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.StepName.Label")); //$NON-NLS-1$
+		wlStepname.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.StepName.Label")); //$NON-NLS-1$
         props.setLook( wlStepname );
 		fdlStepname=new FormData();
 		fdlStepname.left = new FormAttachment(0, 0);
@@ -130,7 +130,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 
 		// protocol 
 		wlProtocol = new Label(shell, SWT.RIGHT);
-		wlProtocol.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.Protocol.Label"));
+		wlProtocol.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.Protocol.Label"));
 		props.setLook(wlProtocol);
 		fdlProtocol = new FormData();
 		fdlProtocol.left = new FormAttachment(0,0);
@@ -148,7 +148,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 
 		// Host line
 		wlHost=new Label(shell, SWT.RIGHT);
-		wlHost.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.Host.Label")); //$NON-NLS-1$
+		wlHost.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.Host.Label")); //$NON-NLS-1$
         props.setLook( wlHost );
 		fdlHost=new FormData();
 		fdlHost.left = new FormAttachment(0, 0);
@@ -167,7 +167,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		
 		// Port
 		Label wlPort = new Label(shell, SWT.RIGHT);
-		wlPort.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.Port.Label"));
+		wlPort.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.Port.Label"));
 		props.setLook(wlPort);
 		fdlPort = new FormData();
 		fdlPort.left = new FormAttachment(0,0);
@@ -186,7 +186,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		
 		// Username
 		Label wlUsername = new Label(shell, SWT.RIGHT);
-		wlUsername.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.Username.Label"));
+		wlUsername.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.Username.Label"));
 		props.setLook(wlUsername);
 		fdlUsername = new FormData();
 		fdlUsername.left = new FormAttachment(0,0);
@@ -205,7 +205,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 			
 		// Password
 		Label wlPassword=new Label(shell, SWT.RIGHT);
-		wlPassword.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.Password.Label")); //$NON-NLS-1$
+		wlPassword.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.Password.Label")); //$NON-NLS-1$
         props.setLook( wlPassword);
 		fdlPassword = new FormData();
 		fdlPassword.left = new FormAttachment(0, 0);
@@ -236,11 +236,11 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 				    Transaction tx = session.beginTransaction();
 				    tx.close();
 
-					message = BaseMessages.getString(PKG, "Neo4JOutputDialog.ConnectionTest.Success");
+					message = BaseMessages.getString(PKG, "Neo4jOutputDialog.ConnectionTest.Success");
 			    }catch(Exception e){
-					message = BaseMessages.getString(PKG, "Neo4JOutputDialog.ConnectionTest.Failed");
+					message = BaseMessages.getString(PKG, "Neo4jOutputDialog.ConnectionTest.Failed");
 			    }
-				ShowMessageDialog msgDialog = new ShowMessageDialog(shell, SWT.OK, BaseMessages.getString(PKG, "Neo4JOutputDialog.ConnectionTest.Title") , message);
+				ShowMessageDialog msgDialog = new ShowMessageDialog(shell, SWT.OK, BaseMessages.getString(PKG, "Neo4jOutputDialog.ConnectionTest.Title") , message);
 				msgDialog.open();				
 			}
         	
@@ -290,7 +290,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		 * FROM
 		 */
 		wFromTab=new CTabItem(wTabFolder, SWT.NONE);
-		wFromTab.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.FromTab")); //$NON-NLS-1$
+		wFromTab.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.FromTab")); //$NON-NLS-1$
 
 		FormLayout fromLayout = new FormLayout ();
 		fromLayout.marginWidth  = 3;
@@ -302,7 +302,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 
 		// Labels 
 		Label wlFromLabel = new Label(wFromComp, SWT.RIGHT);
-		wlFromLabel.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.LabelsField.FromLabel"));
+		wlFromLabel.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.LabelsField.FromLabel"));
 		props.setLook(wlFromLabel);
 		FormData fdlFromLabels = new FormData();
 		fdlFromLabels.left = new FormAttachment(0, 0);
@@ -310,7 +310,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		wlFromLabel.setLayoutData(fdlFromLabels);
 		final int fromLabelRows = (input.getFromNodeLabels() != null ? input.getFromNodeLabels().length : 10);
 		ColumnInfo[] fromLabelInf = new ColumnInfo[]{
-			      new ColumnInfo( BaseMessages.getString(PKG, "Neo4JOutputDialog.FromLabelsTable.FromFields"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
+			      new ColumnInfo( BaseMessages.getString(PKG, "Neo4jOutputDialog.FromLabelsTable.FromFields"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
 		};
 		wFromLabelGrid =
 			    new TableView( Variables.getADefaultVariableSpace(), wFromComp, SWT.BORDER
@@ -318,7 +318,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		props.setLook(wFromLabelGrid);		
 		
 		wGetFromLabel= new Button(wFromComp, SWT.PUSH);
-		wGetFromLabel.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.GetFields.Button")); //$NON-NLS-1$
+		wGetFromLabel.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.GetFields.Button")); //$NON-NLS-1$
 		wGetFromLabel.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -352,7 +352,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		
 		// Node properties
 		Label wlFromFields = new Label(wFromComp, SWT.RIGHT);
-		wlFromFields.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.FromFields.Properties"));
+		wlFromFields.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.FromFields.Properties"));
 		props.setLook(wlFromFields);
 		FormData fdlFromFields = new FormData();
 		fdlFromFields.left = new FormAttachment(0,0);
@@ -361,8 +361,8 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		final int fromPropsRows = (input.getFromNodeProps() != null ? input.getFromNodeProps().length : 10);
 		ColumnInfo[] colinf =
 				    new ColumnInfo[] {
-				      new ColumnInfo( BaseMessages.getString(PKG, "Neo4JOutputDialog.FromFieldsTable.FromPropFields"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
-				      new ColumnInfo( BaseMessages.getString(PKG, "Neo4JOutputDialog.FromFieldsTable.FromPropFieldsName"), ColumnInfo.COLUMN_TYPE_TEXT, fieldNames )
+				      new ColumnInfo( BaseMessages.getString(PKG, "Neo4jOutputDialog.FromFieldsTable.FromPropFields"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
+				      new ColumnInfo( BaseMessages.getString(PKG, "Neo4jOutputDialog.FromFieldsTable.FromPropFieldsName"), ColumnInfo.COLUMN_TYPE_TEXT, fieldNames )
 				      };
 		wFromPropsGrid =
 				    new TableView( Variables.getADefaultVariableSpace(), wFromComp, SWT.BORDER
@@ -370,7 +370,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		props.setLook(wFromPropsGrid);
 		
 		wGetFromProps= new Button(wFromComp, SWT.PUSH);
-		wGetFromProps.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.GetFields.Button")); //$NON-NLS-1$
+		wGetFromProps.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.GetFields.Button")); //$NON-NLS-1$
 		wGetFromProps.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -419,7 +419,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		 */
 		
 		wToTab=new CTabItem(wTabFolder, SWT.NONE);
-		wToTab.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.ToTab")); //$NON-NLS-1$
+		wToTab.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.ToTab")); //$NON-NLS-1$
 
 		FormLayout toLayout = new FormLayout ();
 		toLayout.marginWidth  = 3;
@@ -432,7 +432,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		
 		// Labels 
 		Label wlToLabel = new Label(wToComp, SWT.RIGHT);
-		wlToLabel.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.LabelsField.ToLabel"));
+		wlToLabel.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.LabelsField.ToLabel"));
 		props.setLook(wlToLabel);
 		FormData fdlToLabels = new FormData();
 		fdlToLabels.left = new FormAttachment(0, 0);
@@ -440,7 +440,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		wlToLabel.setLayoutData(fdlToLabels);
 		final int toLabelRows = (input.getToNodeLabels() != null ? input.getToNodeLabels().length : 10);
 		ColumnInfo[] toLabelInf = new ColumnInfo[]{
-			      new ColumnInfo( BaseMessages.getString(PKG, "Neo4JOutputDialog.ToLabelsTable.ToFields"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
+			      new ColumnInfo( BaseMessages.getString(PKG, "Neo4jOutputDialog.ToLabelsTable.ToFields"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
 		};
 		wToLabelGrid =
 			    new TableView( Variables.getADefaultVariableSpace(), wToComp, SWT.BORDER
@@ -448,7 +448,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		props.setLook(wToLabelGrid);
 		
 		wGetToLabel= new Button(wToComp, SWT.PUSH);
-		wGetToLabel.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.GetFields.Button")); //$NON-NLS-1$
+		wGetToLabel.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.GetFields.Button")); //$NON-NLS-1$
 		wGetToLabel.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -485,7 +485,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		
 		// Node properties
 		Label wlToFields = new Label(wToComp, SWT.RIGHT);
-		wlToFields.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.ToFields.Properties"));
+		wlToFields.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.ToFields.Properties"));
 		props.setLook(wlToFields);
 		FormData fdlToFields = new FormData();
 		fdlToFields.left = new FormAttachment(0,0);
@@ -494,8 +494,8 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		final int toPropsRows = (input.getToNodeProps() != null ? input.getToNodeProps().length : 10);
 		ColumnInfo[] toColinf =
 				    new ColumnInfo[] {
-				      new ColumnInfo( BaseMessages.getString(PKG, "Neo4JOutputDialog.ToFieldsTable.ToFields"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
-				      new ColumnInfo( BaseMessages.getString(PKG, "Neo4JOutputDialog.ToFieldsTable.ToFieldsName"), ColumnInfo.COLUMN_TYPE_TEXT, false )
+				      new ColumnInfo( BaseMessages.getString(PKG, "Neo4jOutputDialog.ToFieldsTable.ToFields"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
+				      new ColumnInfo( BaseMessages.getString(PKG, "Neo4jOutputDialog.ToFieldsTable.ToFieldsName"), ColumnInfo.COLUMN_TYPE_TEXT, false )
 				      };
 
 		wToPropsGrid =
@@ -506,7 +506,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		
 		
 		wGetToProps = new Button(wToComp, SWT.PUSH);
-		wGetToProps.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.GetFields.Button")); //$NON-NLS-1$
+		wGetToProps.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.GetFields.Button")); //$NON-NLS-1$
 		wGetToProps.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -555,7 +555,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		 * Relationships
 		 */
 		wRelationshipsTab=new CTabItem(wTabFolder, SWT.NONE);
-		wRelationshipsTab.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.RelationshipsTab")); //$NON-NLS-1$
+		wRelationshipsTab.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.RelationshipsTab")); //$NON-NLS-1$
 
 		FormLayout relationshipsLayout = new FormLayout ();
 		relationshipsLayout.marginWidth  = 3;
@@ -568,7 +568,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 				
 		// Relationship field	
 		Label wlRel = new Label(wRelationshipsComp, SWT.RIGHT);
-		wlRel.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.Relationship.Label"));
+		wlRel.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.Relationship.Label"));
 		props.setLook(wlRel);
 		FormData fdlRel= new FormData();
 		fdlRel.left = new FormAttachment(0, 0);
@@ -587,7 +587,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		
 		// Relationship properties 
 		Label wlRelProps= new Label(wRelationshipsComp, SWT.RIGHT);
-		wlRelProps.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.RelationshipField.Label"));
+		wlRelProps.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.RelationshipField.Label"));
 		props.setLook(wlRelProps);
 		FormData fdlRelProps = new FormData();
 		fdlRelProps.left = new FormAttachment(0, 0);
@@ -595,8 +595,8 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		wlRelProps.setLayoutData(fdlRelProps);
 		final int relPropsRows = (input.getRelProps() != null ? input.getRelProps().length : 10);
 		ColumnInfo[] relPropsInf = new ColumnInfo[]{
-			      new ColumnInfo( BaseMessages.getString(PKG, "Neo4JOutputDialog.RelPropsTable.PropertiesField"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
-			      new ColumnInfo( BaseMessages.getString(PKG, "Neo4JOutputDialog.RelPropsTable.PropertiesFieldName"), ColumnInfo.COLUMN_TYPE_TEXT, false)
+			      new ColumnInfo( BaseMessages.getString(PKG, "Neo4jOutputDialog.RelPropsTable.PropertiesField"), ColumnInfo.COLUMN_TYPE_CCOMBO, fieldNames ),
+			      new ColumnInfo( BaseMessages.getString(PKG, "Neo4jOutputDialog.RelPropsTable.PropertiesFieldName"), ColumnInfo.COLUMN_TYPE_TEXT, false)
 		};
 		wRelPropsGrid =
 			    new TableView( Variables.getADefaultVariableSpace(), wRelationshipsComp, SWT.BORDER
@@ -605,7 +605,7 @@ public class Neo4JOutputDialog extends BaseStepDialog implements StepDialogInter
 		
 		
 		wRelProps = new Button(wRelationshipsComp, SWT.PUSH);
-		wRelProps.setText(BaseMessages.getString(PKG, "Neo4JOutputDialog.GetFields.Button")); //$NON-NLS-1$
+		wRelProps.setText(BaseMessages.getString(PKG, "Neo4jOutputDialog.GetFields.Button")); //$NON-NLS-1$
 		wRelProps.addSelectionListener(new SelectionListener() {
 
 			@Override

@@ -1,4 +1,4 @@
-package bi.know.kettle.neo4j.out.Neo4JOutput;
+package org.neo4j.kettle.steps.output;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,4 +1,4 @@
-package bi.know.kettle.neo4j.output;
+package org.neo4j.kettle.steps.output;
 
 import java.util.List;
 import java.util.Map;
@@ -29,30 +29,30 @@ import org.pentaho.di.trans.step.StepMetaInterface;
 import org.w3c.dom.Node;
 
 
-@Step(id = "Neo4JOutput", 
+@Step(id = "Neo4jOutput", 
 image = "NEO4J.svg",
 i18nPackageName="bi.know.kettle.neo4j.output",
-name="Neo4JOutput.Step.Name",
-description = "Neo4JOutput.Step.Description",
-categoryDescription="Neo4JOutput.Step.Category",
+name="Neo4jOutput.Step.Name",
+description = "Neo4jOutput.Step.Description",
+categoryDescription="Neo4jOutput.Step.Category",
 isSeparateClassLoaderNeeded=true
 )
-public class Neo4JOutputMeta extends BaseStepMeta implements StepMetaInterface{
+public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 	
 	public String protocol, host, port, dbName, username, password, key, relationship;  /*label, labelsSeparator*/ 
 	public String[] fromNodeProps, fromNodePropNames, toNodeProps, toNodePropNames, fromNodeLabels, toNodeLabels, relProps, relPropNames;
 	
 
 	public StepInterface getStep(StepMeta stepMeta, StepDataInterface stepDataInterface, int cnr, TransMeta transMeta, Trans disp) {
-		return new Neo4JOutput(stepMeta, stepDataInterface, cnr, transMeta, disp);
+		return new Neo4jOutput(stepMeta, stepDataInterface, cnr, transMeta, disp);
 	}
 
 	public StepDataInterface getStepData() {
-		return new Neo4JOutputData();
+		return new Neo4jOutputData();
 	}
 	
 	public StepDialogInterface getDialog(Shell shell, StepMetaInterface meta, TransMeta transMeta, String name){
-		return new Neo4JOutputDialog(shell, meta, transMeta, name);
+		return new Neo4jOutputDialog(shell, meta, transMeta, name);
 	}
 
 
