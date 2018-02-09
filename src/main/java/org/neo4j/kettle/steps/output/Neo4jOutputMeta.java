@@ -9,6 +9,7 @@ import org.pentaho.di.core.Const;
 import org.pentaho.di.core.Counter;
 import org.pentaho.di.core.annotations.Step;
 import org.pentaho.di.core.database.DatabaseMeta;
+import org.pentaho.di.core.encryption.Encr;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.exception.KettleXMLException;
 import org.pentaho.di.core.row.RowMetaInterface;
@@ -63,47 +64,58 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 		dbName = "data"; 
 	}
 	
-	public String getXML() throws KettleException{		
-		String retval = "";
-		retval += "<protocol>" + protocol + "</protocol>"  + Const.CR;
-		retval += "<host>" + host + "</host>"  + Const.CR;
-		retval += "<port>" + port + "</port>"  + Const.CR;
-		retval += "<username>" + username + "</username>"  + Const.CR;
-		retval += "<password>" + password + "</password>"  + Const.CR;
-		retval += "<from>" + Const.CR;
-		retval += "<labels>" + Const.CR;
-		for(int i=0; i < fromNodeLabels.length; i++){
-			retval += "    <label>" + fromNodeLabels[i] + "</label>" + Const.CR; 
+	public String getXML() throws KettleException{	
+		StringBuilder xml = new StringBuilder();
+		xml.append(XMLHandler.addTagValue("protocol", protocol));
+		xml.append(XMLHandler.addTagValue("host", host));
+		xml.append(XMLHandler.addTagValue("port", port));
+		xml.append(XMLHandler.addTagValue("username", username));
+		xml.append(XMLHandler.addTagValue("password", Encr.encryptPasswordIfNotUsingVariables(password)));
+		xml.append(XMLHandler.addTagValue("protocol", protocol));
+		xml.append(XMLHandler.addTagValue("protocol", protocol));
+		xml.append("<from>").append(Const.CR);
+		xml.append("  <labels>").append(Const.CR);
+		for (int i = 0; i < fromNodeLabels.length; i++) {
+			xml.append("    ").append(XMLHandler.addTagValue("label", fromNodeLabels[i]));
 		}
-		retval += "</labels>" + Const.CR;
-		retval += "<properties>" + Const.CR;
-		for(int i=0; i < fromNodeProps.length; i++){
-			retval += "    <property><name>" + fromNodePropNames[i] + "</name><value>" + fromNodeProps[i] + "</value></property>" + Const.CR; 
+		xml.append("  </labels>").append(Const.CR);
+		xml.append("  <properties>").append(Const.CR);
+		for (int i = 0; i < fromNodeProps.length; i++) {
+			xml.append("    <property>").append(Const.CR);
+			xml.append("      ").append(XMLHandler.addTagValue("name", fromNodePropNames[i]));
+			xml.append("      ").append(XMLHandler.addTagValue("value", fromNodeProps[i]));
+			xml.append("    </property>").append(Const.CR);
 		}
-		retval += "</properties>" + Const.CR;
-		retval += "</from>" + Const.CR;
-		retval += "<to>" + Const.CR;
-		retval += "<labels>" + Const.CR;
+		xml.append("  </properties>").append(Const.CR);
+		xml.append("</from>").append(Const.CR);
+		xml.append("<to>").append(Const.CR);
+		xml.append("  <labels>").append(Const.CR);
 		for(int i=0; i < toNodeLabels.length; i++){
-			retval += "    <label>" + toNodeLabels[i] + "</label>" + Const.CR; 
+			xml.append("    ").append(XMLHandler.addTagValue("label", toNodeLabels[i]));
 		}
-		retval += "</labels>" + Const.CR;
-		retval += "<properties>" + Const.CR;
+		xml.append("  </labels>").append(Const.CR);
+		xml.append("  <properties>").append(Const.CR);
 		for(int i=0; i < toNodeProps.length; i++){
-			retval += "    <property><name>" + toNodePropNames[i] + "</name><value>" + toNodeProps[i] + "</value></property>" + Const.CR; 
+			xml.append("    <property>").append(Const.CR);
+			xml.append("      ").append(XMLHandler.addTagValue("name", toNodePropNames[i]));
+			xml.append("      ").append(XMLHandler.addTagValue("value", toNodeProps[i]));
+			xml.append("    </property>").append(Const.CR);
 		}
-		retval += "</properties>" + Const.CR;
-		retval += "</to>" + Const.CR;
+		xml.append("  </properties>").append(Const.CR);
+		xml.append("</to>").append(Const.CR);
 		
-		retval += "<relationship>" + relationship + "</relationship>" + Const.CR;
+		xml.append(XMLHandler.addTagValue("relationship", relationship));
 		
-		retval += "<relprops>" + Const.CR;
+		xml.append("<relprops>").append(Const.CR);
 		for(int i=0; i < relProps.length; i++){
-			retval += "    <relprop><name>" + relPropNames[i] + "</name><value>" + relProps[i] + "</value></relprop>" + Const.CR; 
+			xml.append("    <relprop>").append(Const.CR);
+			xml.append("      ").append(XMLHandler.addTagValue("name", relPropNames[i]));
+			xml.append("      ").append(XMLHandler.addTagValue("value", relProps[i]));
+			xml.append("    </relprop>").append(Const.CR);
 		}
-		retval += "</relprops>" + Const.CR;
+		xml.append("</relprops>").append(Const.CR);
 		
-		return retval;
+		return xml.toString();
 	}
 
 	public void loadXML(Node stepnode, List<DatabaseMeta> databases, Map<String,Counter> counters) throws KettleXMLException{		
