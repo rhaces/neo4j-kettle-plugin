@@ -90,12 +90,12 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 		xml.append("</from>").append(Const.CR);
 		xml.append("<to>").append(Const.CR);
 		xml.append("  <labels>").append(Const.CR);
-		for(int i=0; i < toNodeLabels.length; i++){
+		for (int i = 0; i < toNodeLabels.length; i++) {
 			xml.append("    ").append(XMLHandler.addTagValue("label", toNodeLabels[i]));
 		}
 		xml.append("  </labels>").append(Const.CR);
 		xml.append("  <properties>").append(Const.CR);
-		for(int i=0; i < toNodeProps.length; i++){
+		for (int i = 0; i < toNodeProps.length; i++) {
 			xml.append("    <property>").append(Const.CR);
 			xml.append("      ").append(XMLHandler.addTagValue("name", toNodePropNames[i]));
 			xml.append("      ").append(XMLHandler.addTagValue("value", toNodeProps[i]));
@@ -103,18 +103,18 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 		}
 		xml.append("  </properties>").append(Const.CR);
 		xml.append("</to>").append(Const.CR);
-		
+
 		xml.append(XMLHandler.addTagValue("relationship", relationship));
-		
+
 		xml.append("<relprops>").append(Const.CR);
-		for(int i=0; i < relProps.length; i++){
+		for (int i = 0; i < relProps.length; i++) {
 			xml.append("    <relprop>").append(Const.CR);
 			xml.append("      ").append(XMLHandler.addTagValue("name", relPropNames[i]));
 			xml.append("      ").append(XMLHandler.addTagValue("value", relProps[i]));
 			xml.append("    </relprop>").append(Const.CR);
 		}
 		xml.append("</relprops>").append(Const.CR);
-		
+
 		return xml.toString();
 	}
 
