@@ -84,8 +84,7 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 		xml.append(XMLHandler.addTagValue("port", port));
 		xml.append(XMLHandler.addTagValue("username", username));
 		xml.append(XMLHandler.addTagValue("password", Encr.encryptPasswordIfNotUsingVariables(password)));
-		xml.append(XMLHandler.addTagValue("protocol", protocol));
-		xml.append(XMLHandler.addTagValue("protocol", protocol));
+		
 		xml.append("<from>").append(Const.CR);
 		xml.append("  <labels>").append(Const.CR);
 		for (int i = 0; i < fromNodeLabels.length; i++) {
@@ -204,9 +203,54 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 			logBasic("Relationship Property" + i + ": " + relProps[i] + ", name: " + relPropNames[i]);
 		}
 	}
-		
-	public void readRep(Repository rep, ObjectId id_step, List<DatabaseMeta> databases, Map<String,Counter> counters) throws KettleException{
-		
+
+	public void readRep(Repository rep, ObjectId id_step, List<DatabaseMeta> databases, Map<String, Counter> counters)
+			throws KettleException {
+		try {
+			protocol = rep.getStepAttributeString(id_step, "protocol");
+			host = rep.getStepAttributeString(id_step, "host");
+			port = rep.getStepAttributeString(id_step, "port");
+			username = rep.getStepAttributeString(id_step, "username");
+			password = rep.getStepAttributeString(id_step, "password");
+
+			int nbFromLabelFields = rep.countNrStepAttributes(id_step, "fromNodeLabels");
+			fromNodeLabels = new String[nbFromLabelFields];
+			for (int i = 0; i < nbFromLabelFields; i++) {
+				fromNodeLabels[i] = rep.getStepAttributeString(id_step, i, "fromNodeLabels");
+			}
+			int nbFromPropFields = rep.countNrStepAttributes(id_step, "fromNodeProps");
+			fromNodeProps = new String[nbFromPropFields];
+			fromNodePropNames = new String[nbFromPropFields];
+			for (int i = 0; i < nbFromPropFields; i++) {
+				fromNodeProps[i] = rep.getStepAttributeString(id_step, i, "fromNodeProps");
+				fromNodePropNames[i] = rep.getStepAttributeString(id_step, i, "fromNodePropNames");
+			}
+
+			int nbToLabelFields = rep.countNrStepAttributes(id_step, "toNodeLabels");
+			toNodeLabels = new String[nbToLabelFields];
+			for (int i = 0; i < nbToLabelFields; i++) {
+				toNodeLabels[i] = rep.getStepAttributeString(id_step, i, "toNodeLabels");
+			}
+			int nbToPropFields = rep.countNrStepAttributes(id_step, "toPropsNode");
+			toNodeProps = new String[nbToPropFields];
+			toNodePropNames = new String[nbToPropFields];
+			for (int i = 0; i < nbToPropFields; i++) {
+				toNodeProps[i] = rep.getStepAttributeString(id_step, i, "toNodeProps");
+				toNodePropNames[i] = rep.getStepAttributeString(id_step, i, "toNodePropNames");
+			}
+
+			relationship = rep.getStepAttributeString(id_step, "relationship");
+
+			int nbFields = rep.countNrStepAttributes(id_step, "relProps");
+			relProps = new String[nbFields];
+			relPropNames = new String[nbFields];
+			for (int i = 0; i < nbFields; i++) {
+				relProps[i] = rep.getStepAttributeString(id_step, i, "relProps");
+				relPropNames[i] = rep.getStepAttributeString(id_step, i, "relPropNames");
+			}
+		} catch (KettleException e) {
+			throw new KettleException("Unable to load step from repository", e);
+		}
 	}
 
 	public void saveRep(Repository rep, ObjectId id_transformation, ObjectId id_step) throws KettleException {
