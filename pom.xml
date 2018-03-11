@@ -3,18 +3,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.neo4j.kettle</groupId>
-	<artifactId>Neo4jKettlePlugin</artifactId>
+	<artifactId>kettle-neo4j-plugin</artifactId>
 	<version>1.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Neo4jKettlePlugin</name>
+	<name>kettle-neo4j-plugin</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<pdi.version>8.1-SNAPSHOT</pdi.version>
+		<pdi.version>8.0-SNAPSHOT</pdi.version>
 		<swt.version>4.6</swt.version>
-		<pdi.dir>/opt/pentaho/pdi/ce/7.1</pdi.dir>
+		<pdi.dir>/home/rodrigo/opt/pentaho/data-integration</pdi.dir>
 	</properties>
 
 	<build>
@@ -24,7 +24,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
-					<outputDirectory>${pdi.dir}/plugins/Neo4jKettlePlugin</outputDirectory>
+					<outputDirectory>${pdi.dir}/plugins/steps/kettle-neo4j-plugin</outputDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -39,7 +39,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${pdi.dir}/plugins/Neo4jKettlePlugin/lib</outputDirectory>
+							<outputDirectory>${pdi.dir}/plugins/steps/kettle-neo4j-plugin/lib</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
@@ -63,7 +63,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${pdi.dir}/plugins/Neo4jKettlePlugin</outputDirectory>
+							<outputDirectory>${pdi.dir}/plugins/steps/kettle-neo4j-plugin]</outputDirectory>
 							<resources>
 								<resource>
 									<directory>resources</directory>
