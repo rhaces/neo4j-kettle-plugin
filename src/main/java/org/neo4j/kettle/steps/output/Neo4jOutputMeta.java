@@ -209,8 +209,36 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 		
 	}
 
-	public void saveRep(Repository rep, ObjectId id_transformation, ObjectId id_step) throws KettleException{
-		
+	public void saveRep(Repository rep, ObjectId id_transformation, ObjectId id_step) throws KettleException {
+		rep.saveStepAttribute(id_transformation, id_step, "protocol", protocol);
+		rep.saveStepAttribute(id_transformation, id_step, "host", host);
+		rep.saveStepAttribute(id_transformation, id_step, "port", port);
+		rep.saveStepAttribute(id_transformation, id_step, "username", username);
+		rep.saveStepAttribute(id_transformation, id_step, "password", password);
+
+		for (int i = 0; i < fromNodeLabels.length; i++) {
+			rep.saveStepAttribute(id_transformation, id_step, i, "fromNodeLabels", fromNodeLabels[i]);
+		}
+		for (int i = 0; i < fromNodeProps.length; i++) {
+			rep.saveStepAttribute(id_transformation, id_step, i, "fromNodeProps", fromNodeProps[i]);
+			rep.saveStepAttribute(id_transformation, id_step, i, "fromNodePropNames", fromNodePropNames[i]);
+		}
+
+		for (int i = 0; i < toNodeLabels.length; i++) {
+			rep.saveStepAttribute(id_transformation, id_step, i, "toNodeLabels", toNodeLabels[i]);
+		}
+		for (int i = 0; i < fromNodeProps.length; i++) {
+			rep.saveStepAttribute(id_transformation, id_step, i, "toNodeProps", toNodeProps[i]);
+			rep.saveStepAttribute(id_transformation, id_step, i, "toNodePropNames", toNodePropNames[i]);
+		}
+
+		rep.saveStepAttribute(id_transformation, id_step, "relationship", relationship);
+
+		for (int i = 0; i < relProps.length; i++) {
+			rep.saveStepAttribute(id_transformation, id_step, i, "relProps", relProps[i]);
+			rep.saveStepAttribute(id_transformation, id_step, i, "relPropNames", relPropNames[i]);
+		}
+
 	}
 
 	public void check(List<CheckResultInterface> remarks, TransMeta transmeta, StepMeta stepMeta, RowMetaInterface prev, String input[], String output[], RowMetaInterface info)
