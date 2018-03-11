@@ -24,7 +24,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
-					<outputDirectory>${pdi.dir}/plugins/steps/kettle-neo4j-plugin</outputDirectory>
+					<outputDirectory>${pdi.dir}/plugins/kettle-neo4j-plugin</outputDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -39,7 +39,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${pdi.dir}/plugins/steps/kettle-neo4j-plugin/lib</outputDirectory>
+							<outputDirectory>${pdi.dir}/plugins/kettle-neo4j-plugin/lib</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
@@ -63,7 +63,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${pdi.dir}/plugins/steps/kettle-neo4j-plugin]</outputDirectory>
+							<outputDirectory>${pdi.dir}/plugins/kettle-neo4j-plugin]</outputDirectory>
 							<resources>
 								<resource>
 									<directory>resources</directory>
