@@ -32,7 +32,7 @@ import org.w3c.dom.Node;
 
 @Step(id = "Neo4jOutput", 
 image = "NEO4J.svg",
-i18nPackageName="bi.know.kettle.neo4j.output",
+i18nPackageName="org.neo4j.kettle.steps.output",
 name="Neo4jOutput.Step.Name",
 description = "Neo4jOutput.Step.Description",
 categoryDescription="Neo4jOutput.Step.Category",
