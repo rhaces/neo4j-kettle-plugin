@@ -149,7 +149,7 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 		host = XMLHandler.getTagValue(stepnode, "host");
 		port = XMLHandler.getTagValue(stepnode, "port");
 		username = XMLHandler.getTagValue(stepnode, "username");
-		password = XMLHandler.getTagValue(stepnode, "password");
+		password = Encr.decryptPasswordOptionallyEncrypted(XMLHandler.getTagValue(stepnode, "password"));
 
 		Node fromNode = XMLHandler.getSubNode(stepnode, "from");
 		Node fromLabelsNode = XMLHandler.getSubNode(fromNode, "labels");
@@ -224,7 +224,7 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 			host = rep.getStepAttributeString(id_step, "host");
 			port = rep.getStepAttributeString(id_step, "port");
 			username = rep.getStepAttributeString(id_step, "username");
-			password = rep.getStepAttributeString(id_step, "password");
+			password = Encr.decryptPasswordOptionallyEncrypted(rep.getStepAttributeString(id_step, "password"));
 
 			int nbFromLabelFields = rep.countNrStepAttributes(id_step, "fromNodeLabels");
 			fromNodeLabels = new String[nbFromLabelFields];
@@ -271,7 +271,8 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 		rep.saveStepAttribute(id_transformation, id_step, "host", host);
 		rep.saveStepAttribute(id_transformation, id_step, "port", port);
 		rep.saveStepAttribute(id_transformation, id_step, "username", username);
-		rep.saveStepAttribute(id_transformation, id_step, "password", password);
+		rep.saveStepAttribute(id_transformation, id_step, "password",
+				Encr.encryptPasswordIfNotUsingVariables(password));
 
 		for (int i = 0; i < fromNodeLabels.length; i++) {
 			rep.saveStepAttribute(id_transformation, id_step, i, "fromNodeLabels", fromNodeLabels[i]);
