@@ -40,8 +40,21 @@ isSeparateClassLoaderNeeded=true
 )
 public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 	
-	public String protocol, host, port, dbName, username, password, key, relationship;  /*label, labelsSeparator*/ 
-	public String[] fromNodeProps, fromNodePropNames, toNodeProps, toNodePropNames, fromNodeLabels, toNodeLabels, relProps, relPropNames;
+	public String protocol;
+	public String host;
+	public String port;
+	public String dbName;
+	public String username;
+	public String password;
+	public String relationship;
+	public String[] fromNodeProps;
+	public String[] fromNodePropNames;
+	public String[] toNodeProps;
+	public String[] toNodePropNames;
+	public String[] fromNodeLabels;
+	public String[] toNodeLabels;
+	public String[] relProps;
+	public String[] relPropNames;
 	
 
 	public StepInterface getStep(StepMeta stepMeta, StepDataInterface stepDataInterface, int cnr, TransMeta transMeta, Trans disp) {
@@ -118,75 +131,74 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 		return xml.toString();
 	}
 
-	public void loadXML(Node stepnode, List<DatabaseMeta> databases, Map<String,Counter> counters) throws KettleXMLException{		
+	public void loadXML(Node stepnode, List<DatabaseMeta> databases, Map<String, Counter> counters)
+			throws KettleXMLException {
 		protocol = XMLHandler.getTagValue(stepnode, "protocol");
 		host = XMLHandler.getTagValue(stepnode, "host");
 		port = XMLHandler.getTagValue(stepnode, "port");
 		username = XMLHandler.getTagValue(stepnode, "username");
 		password = XMLHandler.getTagValue(stepnode, "password");
-		key= XMLHandler.getTagValue(stepnode, "key");
-		
+
 		Node fromNode = XMLHandler.getSubNode(stepnode, "from");
 		Node fromLabelsNode = XMLHandler.getSubNode(fromNode, "labels");
-		int nbFromLabelFields =  XMLHandler.countNodes(fromLabelsNode, "label");
-		fromNodeLabels= new String[nbFromLabelFields];
-		for(int i=0; i < nbFromLabelFields; i++){
+		int nbFromLabelFields = XMLHandler.countNodes(fromLabelsNode, "label");
+		fromNodeLabels = new String[nbFromLabelFields];
+		for (int i = 0; i < nbFromLabelFields; i++) {
 			Node labelNode = XMLHandler.getSubNodeByNr(fromLabelsNode, "label", i);
 			fromNodeLabels[i] = labelNode.getTextContent();
 			logBasic("From Node " + i + ": " + fromNodeLabels[i]);
 		}
 		Node fromPropsNode = XMLHandler.getSubNode(fromNode, "properties");
-		int nbFromPropFields =  XMLHandler.countNodes(fromPropsNode, "property");
+		int nbFromPropFields = XMLHandler.countNodes(fromPropsNode, "property");
 		fromNodeProps = new String[nbFromPropFields];
 		fromNodePropNames = new String[nbFromPropFields];
-		for(int i=0; i < nbFromPropFields; i++){
+		for (int i = 0; i < nbFromPropFields; i++) {
 			Node propNode = XMLHandler.getSubNodeByNr(fromPropsNode, "property", i);
 			fromNodeProps[i] = XMLHandler.getSubNode(propNode, "value").getTextContent();
-			if(XMLHandler.getSubNode(propNode, "name").getTextContent().isEmpty()) {
+			if (XMLHandler.getSubNode(propNode, "name").getTextContent().isEmpty()) {
 				fromNodePropNames[i] = "";
-			}else {
+			} else {
 				fromNodePropNames[i] = XMLHandler.getSubNode(propNode, "name").getTextContent();
 			}
 			logBasic("From Node " + i + ": " + fromNodeProps[i] + ", name: " + fromNodePropNames[i]);
 		}
-		
+
 		Node toNode = XMLHandler.getSubNode(stepnode, "to");
 		Node toLabelsNode = XMLHandler.getSubNode(toNode, "labels");
-		int nbToLabelFields =  XMLHandler.countNodes(toLabelsNode, "label");
-		toNodeLabels= new String[nbToLabelFields];
-		for(int i=0; i < nbToLabelFields; i++){
+		int nbToLabelFields = XMLHandler.countNodes(toLabelsNode, "label");
+		toNodeLabels = new String[nbToLabelFields];
+		for (int i = 0; i < nbToLabelFields; i++) {
 			Node labelNode = XMLHandler.getSubNodeByNr(toLabelsNode, "label", i);
 			toNodeLabels[i] = labelNode.getTextContent();
 			logBasic("To Node " + i + ": " + toNodeLabels[i]);
 		}
 		Node toPropsNode = XMLHandler.getSubNode(toNode, "properties");
-		int nbToPropFields =  XMLHandler.countNodes(toPropsNode, "property");
+		int nbToPropFields = XMLHandler.countNodes(toPropsNode, "property");
 		toNodeProps = new String[nbToPropFields];
 		toNodePropNames = new String[nbToPropFields];
-		for(int i=0; i < nbToPropFields; i++){
+		for (int i = 0; i < nbToPropFields; i++) {
 			Node propNode = XMLHandler.getSubNodeByNr(toPropsNode, "property", i);
 			toNodeProps[i] = XMLHandler.getSubNode(propNode, "value").getTextContent();
-			if(XMLHandler.getSubNode(propNode, "name").getTextContent().isEmpty()) {
+			if (XMLHandler.getSubNode(propNode, "name").getTextContent().isEmpty()) {
 				toNodePropNames[i] = "";
-			}else {
+			} else {
 				toNodePropNames[i] = XMLHandler.getSubNode(propNode, "name").getTextContent();
 			}
-			logBasic("To Node " + i + ": " + toNodeProps[i] +", name: " + toNodePropNames[i]);
+			logBasic("To Node " + i + ": " + toNodeProps[i] + ", name: " + toNodePropNames[i]);
 		}
-		
-		
+
 		relationship = XMLHandler.getTagValue(stepnode, "relationship");
-		
+
 		Node relPropsNode = XMLHandler.getSubNode(stepnode, "relprops");
-		int nbFields =  XMLHandler.countNodes(relPropsNode, "relprop");
+		int nbFields = XMLHandler.countNodes(relPropsNode, "relprop");
 		relProps = new String[nbFields];
 		relPropNames = new String[nbFields];
-		for(int i=0; i < nbFields; i++){
+		for (int i = 0; i < nbFields; i++) {
 			Node relPropNode = XMLHandler.getSubNodeByNr(relPropsNode, "relprop", i);
 			relProps[i] = XMLHandler.getSubNode(relPropNode, "value").getTextContent();
-			if(XMLHandler.getSubNode(relPropNode, "name").getTextContent().isEmpty()) {
+			if (XMLHandler.getSubNode(relPropNode, "name").getTextContent().isEmpty()) {
 				relPropNames[i] = "";
-			}else {
+			} else {
 				relPropNames[i] = XMLHandler.getSubNode(relPropNode, "name").getTextContent();
 			}
 			logBasic("Relationship Property" + i + ": " + relProps[i] + ", name: " + relPropNames[i]);
@@ -279,14 +291,6 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 	
 	public String getPassword(){
 		return password;
-	}
-	
-	public void setKey(String key){
-		this.key = key;
-	}
-	
-	public String getKey(){
-		return key;
 	}
 	
 	public void setFromNodeLabels(String[] fromNodeLabels){
