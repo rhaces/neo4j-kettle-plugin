@@ -56,6 +56,19 @@ public class Neo4jOutputMeta extends BaseStepMeta implements StepMetaInterface{
 	public String[] relProps;
 	public String[] relPropNames;
 	
+	public Neo4jOutputMeta() {
+		super();
+		
+		fromNodeProps = new String[0];
+		fromNodePropNames = new String[0];
+		toNodeProps = new String[0];
+		toNodePropNames = new String[0];
+		fromNodeLabels = new String[0];
+		toNodeLabels = new String[0];
+		relProps = new String[0];
+		relPropNames = new String[0];
+		
+	}
 
 	public StepInterface getStep(StepMeta stepMeta, StepDataInterface stepDataInterface, int cnr, TransMeta transMeta, Trans disp) {
 		return new Neo4jOutput(stepMeta, stepDataInterface, cnr, transMeta, disp);
